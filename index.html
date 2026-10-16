@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les temps du récit – Fransid</title>
+<style>
+:root{--vert:#1d4a38;--vert2:#2f6b52;--jaune:#f2b035;--jaune-clair:#fdf1d3;--papier:#fbf8ee;--encre:#1f2a2e;--ligne:#d9e3ee;--ok:#1e7a46;--okbg:#e2f4e8;--ko:#b3261e;--kobg:#fbe5e3;--bleu:#e8f1fb}
+*{box-sizing:border-box}
+body{margin:0;font-family:Verdana,"Trebuchet MS",sans-serif;font-size:17px;line-height:1.65;color:var(--encre);background-color:var(--papier);background-image:linear-gradient(var(--ligne) 1px,transparent 1px),linear-gradient(90deg,var(--ligne) 1px,transparent 1px);background-size:32px 32px}
+header{background:#fff;border-bottom:6px solid var(--jaune);padding:14px 20px;text-align:center}
+header img{max-width:260px;width:60%;height:auto}
+header p{margin:6px 0 0;font-size:.95rem;color:var(--vert)}
+nav{display:flex;gap:12px;justify-content:center;padding:18px 12px 0;flex-wrap:wrap}
+nav button{font:inherit;font-weight:bold;font-size:1.05rem;padding:12px 28px;border:3px solid var(--vert);background:#fff;color:var(--vert);border-radius:12px 12px 0 0;cursor:pointer}
+nav button[aria-selected=true]{background:var(--vert);color:#fff}
+nav button:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--jaune);outline-offset:2px}
+main{max-width:920px;margin:0 auto;padding:0 14px 50px}
+section.tab{display:none;background:#fff;border:3px solid var(--vert);border-radius:0 0 14px 14px;padding:24px clamp(14px,4vw,34px);box-shadow:6px 6px 0 var(--jaune)}
+section.tab.on{display:block}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--vert);line-height:1.25}
+h1{font-size:1.8rem;margin-top:0}
+h2{font-size:1.45rem;border-bottom:3px solid var(--jaune);padding-bottom:4px;margin-top:34px}
+h3{font-size:1.15rem}
+.rappel{background:var(--bleu);border-left:8px solid var(--vert2);border-radius:8px;padding:12px 18px;margin:16px 0}
+.rappel b.t{font-family:Georgia,serif;font-size:1.1rem;display:block}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.97rem}
+th,td{border:2px solid var(--vert);padding:10px 12px;text-align:left;vertical-align:top}
+th{background:#e6f5ec;color:var(--vert)}
+td:first-child{font-weight:bold;width:28%}
+.tw{overflow-x:auto}
+em.ex{display:block;color:#33454c}
+.v{color:var(--vert);font-weight:bold}
+.pill{display:inline-block;background:var(--jaune);color:#3a2a00;font-weight:bold;border-radius:20px;padding:1px 12px;font-size:.9rem}
+.q{border:2px solid var(--ligne);border-left:8px solid var(--jaune);border-radius:10px;padding:14px 16px;margin:14px 0;background:#fff}
+.q.ok{border-left-color:var(--ok)}.q.ko{border-left-color:var(--ko)}
+.q p{margin:0 0 10px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts.row{flex-direction:row;flex-wrap:wrap}
+.opt,.btn{font:inherit;text-align:left;padding:9px 14px;border:2px solid var(--vert);background:#fff;border-radius:8px;cursor:pointer;color:var(--encre)}
+.opt:hover:not(:disabled){background:var(--jaune-clair)}
+.opt:disabled{cursor:default}
+.opt.good{background:var(--okbg);border-color:var(--ok);font-weight:bold}
+.opt.bad{background:var(--kobg);border-color:var(--ko)}
+.btn{background:var(--vert);color:#fff;font-weight:bold;text-align:center}
+.btn:hover:not(:disabled){background:var(--vert2)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.jaune{background:var(--jaune);color:#3a2a00;border-color:#b98313}
+input[type=text],input[type=email],textarea{font:inherit;padding:8px 10px;border:2px solid var(--vert);border-radius:8px;width:100%}
+input.gap{width:150px;display:inline-block;padding:3px 8px;margin:0 4px}
+textarea{min-height:80px}
+.fb{margin-top:10px;padding:8px 12px;border-radius:8px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--okbg);color:#0f4d2b}.fb.ko{background:var(--kobg);color:#7a1610}.fb.nt{background:var(--jaune-clair)}
+.score{position:sticky;top:0;z-index:5;background:var(--vert);color:#fff;padding:8px 16px;border-radius:0 0 10px 10px;font-weight:bold;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.envoi{background:var(--jaune-clair);border:3px dashed var(--jaune);border-radius:12px;padding:16px;margin:18px 0}
+.envoi .g{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:10px 0}
+.envoi label{font-weight:bold;font-size:.92rem;display:block}
+#msg{margin-top:10px;font-weight:bold}
+footer{text-align:center;font-size:.85rem;color:#4a5b60;padding:10px}
+@media(max-width:600px){body{font-size:16px}td:first-child{width:auto}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCACeAc8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9Q6KKK886AooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAQ0lOpDQAnNJz60p6V5n8av2hvBfwH0dbzxNqQW7lBNtplvh7m4P+ymeB/tHA96aTbsjOU4wi5Tdkel5OOtQXd/b6fC0t1cxW0SjJeaQKoHuTX5i/Fv/gof468dGez8KxR+ENLYkLJH+8u2XsS54Ukf3Rx6182+I/F2t+L7o3Wtaxf6pcN1e7uXkz+ZrojQb3Z41XNYRdqcb/gfs/c/Gz4e2UhjuPHfhuFxwVfVoAR/4/S6Z8afAGs38FjYeOPD17e3DiOG3t9UheSRj0VVDZJ+lfiNHBEOqgn3r0T9mazif9o34egDgaxCcevOat0YpXuYQzSpOSjyrU/akcijmkHSlFcZ9IAo5oFAoAOc0c0DrR1NABR3HNKaQ9RQA6iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAEPSkNK3Q15z8fPjBYfA74Y6r4pvQJZolENnbZwZ7huET6Z5PoATTSbdkROShFylsjzD9sD9rWz+AuiDRdGaK98a30eYYTytmh/5ayD/ANBXv9K/LrxT4j1Txxrt3rWvX9xquqXTbpbq5csx9h6AdgOB2p/jXxRqnj/xTqPiHXLyS91S/lM00znv2AHYAYAHYAVkjivRhBQWm58Vi8TLEzv06IUIqgYpcdqO1NHXFWcYoyTXov7MmR+0d8Psn/mLw/zrzgHDV6N+zSfL/aO+Hmep1iAdPeh/Czal/Ej6o/abnFAOKOlANeUfegKXPNIDRmgAyaXPNJR3oAU0uelNzzS96BimvlL4p/8ABQLw78LPiBrXhW78L6le3OmTeS9xDOio5wDkA896+rTX44/thf8AJyfjv/r/AP8A2Ra2pRUnZnmY+vOhTUqb6n1v/wAPQvCv/Qm6t/4ER/4Uf8PQvCn/AEJurf8AgRH/AIV8A+CfA2ufEbxFb6F4c099T1a4DNFbRsqlgqlm5YgcAE16f/wxf8Z/+hGvP+/0P/xddDp01uePHG4yavHX5H1f/wAPQ/Cn/Qm6t/4Ex/4Uf8PQvCn/AEJurf8AgTH/AIV8of8ADF3xn/6Ea8/7/Q//ABdH/DF3xn/6Ea8/7/Q//F0uSkV9ax3Z/cfoN+zt+1/o37RHibUdG03Qb3SpbK1+1NJdSo6sN4XAx35r3/mvhn9gb4B+PfhP8RPEGoeLPDs+j2dzpnkRSyyIwZ/NU4+Vj2Br7m7VzVElK0T3MJOpOkpVd/uAHNKM0goBrM7Bec0d6TPNHegAJoJNHeg9aBhk0ZNHcUZoAU0dqDSE0AGTS9qTPFANAC4OKTJpc8UgNAgBNAJoFAoGAPNHOaAOaXvQAmTmlpM80Z5oAU5oNITQW5oA+Yv2uP2yF/Z/ubXw9oWnwar4quYRcN9rJ8i1jJIUsFILMcHC5GByeoB+dfA//BTHxtZa9AfFWjaVqmjO4Ey2MTQToueShLFSR6Ec+o60v/BR34R69ZfEqPx3BaS3fh/ULWKCW5jUsttMg27Xx90EbSCepJHavkjw14X1bxhrdppGi6fPqWpXTiOG2t0LOxPt6e/au2EIONz5bFYrEQruKdrbI/crw34isfFvh7Tdb0ycXOnahbx3VvKON0bqGU47cHpWmSea4r4K+Cbn4cfCbwp4avJFlvNN0+KCdkOV8zblwD3AYkA+grtj0Ncb3PpotuKb3EyaMnFJS9qRQZNef/H3xxqXw4+DvinxNpHlf2lptp50HnpvTduUcjv1r0AGvH/2uv8Ak2zx9/2D/wD2daqO6Mqzapya7M+E/wDh498XPXRP/AA//FV9v/shfF7X/jZ8I/8AhJPEf2b+0P7Qmtv9Fi8tNihCOMnn5jX491+p3/BOL/k3X/uMXP8A6DHXVVjFRukeBl9erUrcs5Nqx9R5NOpgGWp9cZ9KIelfmV/wUl+KzeKvilp3gm1uCdP8Owia5jU8NdygHn12x7cem9vWv0xuZhbwSSnhUUsT9BX4XfETX7nxd8SvFeu3c3nzalqlxcbz3UuQo+gUAfhXVQiruT6Hh5tVcaSprr+hj8496MUrcDrSdK6z5dCA0UuKTNAz6C/Y+/Zt0n9pO98UWuq6teaSNJjhdGtFRi5csDncD0219DRfsR+HfgV428L+KLPxFqWpXVldi5jhuEjVWZMEA4HQ5rnv+CWAVdZ+ImOSYLX/ANCkr6w+Oh/daP6bpOP++a+U4jxdbB4CrWoStJW19Wkfd8OYDDYutS9tC97/AIXKTfGvUWY7LG3VfQkmkPxo1QdLO1/8e/xrzlSO1LuyfpX4k+I81/5/v7l/kfrv9j4H/n3+L/zPRT8adUU/8eVsf++v8a0dN+NkZcC+08xqf4oW3focV5SWphO7jkVdPibNqbv7a/ql/kRLJcDJW9nb5v8AzPpPQ/F+k+IFBsrtHkP/ACyY7XH4GtivlOF5LeZZopGikQ7ldTgg/WvYfh98UDqcsenaqQtyfljuegc+h96/QMm4qhjZqhi0oTezWz/yZ8tmORzwsXVoPmit+6/zPS+9L3FJ3pe4r9APlRTX44/thf8AJynjz/r/AP8A2Ra/Y49K/HH9sL/k5Tx3/wBf/wD7ItdFD4meLmv8KPqdH+wL/wAnPeGv+uF3/wCiHr9aTX5LfsDf8nO+Gv8Arhd/+iHr9ac8UV/iLyv+A/X/ACDNHaijPGK5z1xQcVXk1G1gcpJcwow6q8gBFWFPFfkV+3BczR/tO+MlWV1UPb8BiP8Al3jrSEOd2OLFYj6tBTtfU/W6C9t7lisM8UrYyQjgn9KnyFBJOB71+VH7Afj6y8F/G68utZvxa6c+iXYkmmc7UCbJST+EbUz9pb9tXxP8X9Vu9K8PXdx4f8Ho5SOG3cxzXa9N0rDnB67BwM85PNX7F81kcqzGCpe0ktex+lmpfF7wPo+px6feeLtFtr+SQRLavfR+aXJwF25znPFddmvwz+GzFviN4YJJJOqW3J/66rX7deJPEem+ENBv9a1i7jsNMsYWnuLiU4VEHJPufQDkngUqlPktY2wmLeJUpSVkjSJ5rmPEXxQ8H+E5DHrXijR9KlHVLu+jjYfgWzX5qftDft0eL/ilqV3pvhe6n8L+FQxSNLZtl1cr2aRwcrnGdq4AzglutfMc88lzK0s0jyyMcs7sSSfcmrjQb3OOtmkYu1ON/M/bCx+P/wANdTmEVt478PSyE4CjUYgT+bV29nf22pW6XFpcRXUDjKywOHVh7EcV+Ctdv8NfjT4z+EmqxX3hjXrqw2tl7beXt5R6PGflP5Z9DVOh2ZnDNdffjp5H7dE8UjuEQsxCqBkknGK8Q/ZZ/ab039ojwnI8kSad4n09VXULBWypz0ljzyUJ/FTwc8E9x8dGx8FvHZBII0K9wR/1weubladme3GrGdP2kNUdadVssf8AH5b/APf1f8asRTJNGHjdZEPRlOQa/Bf7Zcf895f++zX2b8P/ANsUfBn9knw9oukmO+8ZyXF5BAsx3LaRecz+c47/AOswo6EgnouDtKi1seXSzOM2+dWSVz9Cde8V6L4UtvtGs6tZaTAf+Wl7cJEv5sRXKWn7QXwzvLjyIfHvh55c4CjUYhn6fNzX41eMPHGv+P8AWZtV8RatdavfyklpbmQtj2UdFHsMAVh1aoLqzmlm0r+7HQ/euxv7bUrZLizuIrq3cZSWFw6sPYjg1ODX4rfBr9oPxl8DtdhvvD+pymy3g3Gl3Dlra4XuGTsf9oYIr9cvg38V9I+NPw+0zxTo7bIbpSJrZmBe3mHDxt7g/mMHoaxnTcD08LjIYnS1mdtnmmS3EdvG0krrHGoyzO2AB7muY+KHxI0j4SeB9V8U65KUsLCPcUT78rk4SNB3ZmIA+uTxmvyW+OP7UPjb45azcyajqM2naGXP2fRrSQrBGnYNjHmN6s3fOABxRCm5jxWMhhrJ6t9D9WtV+Ovw60ScxX3jjQLaVTgxtqMW4fgGq5oPxe8D+KZlh0fxdomozNwsVtfxOx9sBs1+HfWlR2jYMrFWHQg4Irf2C7nlLNp3+BH737gcY5FKTzX5Wfsy/tr+JvhTrVlpHii/uNe8HSuI5BcsZJ7IHjfGx5IHUoc8DjBr9S7C+t9Vsbe9tJkuLW4jWWKaJtyujDIYHuCDXPODg9T2cNioYmN479hL2a1WIxXbwiOQFSkxGGHcYPWsrSdM8NaC8j6Za6Vp7yffa0SOIt9duM18Of8ABUeaSHV/h9sdkzBeZ2nH8UVfDEN5cecn7+T7w/jNaQpc0b3OHEZgqNV0+S9vP/gH70HGKCcio7X/AI9Yf9wfyrgvjj8bPD/wH8EXHiHXZDISfKs7GIjzbqYjhF9PUnoBn6VglfRHrykoRcpOyO+llSCJpJHWONRks5wAPrXEap8dvhzocxgvvHGgW0wODG+oxbgfcbq/KX41ftR+O/jfqU7apqkthoxY+To9i5S3jXsGxzIfds85wAOK8i610qh3Z4VTNUnanHTzP3O8N/Efwp4wbboXiTStXbGdlleRyt+SkmuD/a64/Zs8ff8AYP8A/Z1r8dbDULrS7uO6srmW0uY2DJNA5R1PqCORX0vof7Zus+I/gh4v+H3ji4fU5bvTjHpmrMMy71ZT5Ux/iBA4frkc5zkHsXFpoFmUasJQmrNpnzBX6m/8E4/+Tdf+4vc/+gx1+WVfqb/wTj/5N1/7i9z/AOgx1pW+E48s/j/Jn1GOtPpnQ0+uE+rMLx3ctZeCteuEJV4rCd1I7ERsa/CSzJkiDNyx5JPc1+6fxLJHw78T4baf7MuSGPb901fhVpyN9nTJLHHU120NmfNZv8UF5MvHpSYp5XgUznNdB4I00Zpx6U3BHSgLn3N/wSw41r4iepgtT/49JX1j8dM+Vo/pmX/2Wvk//gljxrPxD9TBa/8AoUlfV/x2z5Okd/mk/wDZa+J4u/5Fdb/t3/0pH6Xwp/Go/wDb35M8rXgUoPJpi5xyKUcV/PR+zj+9IVzS0UgGY560wll5QlWByCOoNPPWmkUmwPevhh4sbxHoohuZA9/agLIe7L2b+ldpnkV87/DjWX0XxbZuD+7nYQSDsQ3H88V9EdxX73wzmMswwK9o7yho/Ps/uPy3OMIsJimoL3ZaoU1+OP7YX/Jynjv/AK//AP2Ra/Y6vxx/bC/5OU8ef9f/AP7Itfa0PiZ8Rmv8KPqeV6D4i1Xwtqceo6NqV3pOoRAhLqymaGVQRg4ZSCMgkV1f/C+/iX/0UHxR/wCDi4/+Lrf/AGWfhjo3xg+NOj+FteNyNMu453kNrIEkykTMMEg9wO1feJ/4JwfCQD7/AIg/8Dk/+N10TnGLszyMPhq9aHNTenqfnh/wvv4l/wDRQfFH/g4uP/i69A/Z8+NHxA1n45eArG/8ceIr2yudbtIpre41Sd45UMqgqylsEEdjX2d/w7h+En/PTX//AAOT/wCN1teDP2Cvhj4G8V6R4i019bOoaXdR3lv514jJ5iMGXcBGMjI6ZrN1YWOyGBxMZJuX4n0cOBX5C/tx/wDJz/jL/ft//SeOv16BGOa/IX9uP/k5/wAZf79v/wCk8dZ0PiOzNP4K9f8AM8JR2QnaxUkYOD1HpX0j8DP2FPG/xj0i31y6uIPC+g3A3Q3F4jPNMvZkiGPlPqSPUZry39n7wRD8R/jR4Q8PXS7rS8v089T/ABRLl3H4qpH41+1dtbxWdvHBBGsUMShEjQYCqBgAD0rarUcNEedgMJHEXnPZHxT4U/4Jm2Ph3W9L1SXx3cXM1lcx3Plpp6orFGDY++cdKvf8FK/FOsp4M8M+EtJt7qeDVbiS6vRbRM+Uh27EbA6Fn3Y9Yx6V9mZ5qK6uILS2luLmSOGCJS8kspCqigZJJPAAHeuX2jum9T3HhIKlKnT925+Ftv4M166uIoY9F1AySMEUfZX6k4Hav1H+Av7EXgP4aeG7GbxDotn4n8USRh7q51GMTQxOQMpFG3ygKejEbjycjgDnfil/wUW+H/gq/msfDdhc+MbqJtrT27CC0yOuJGBLfUKQexNeK6p/wVB8XT3DNp/g7R7SHPCXM8szAfUbP5VvJ1JrRWPJpLCYWTc5cz9D7P8AGX7Mvwv8caTJYah4K0eFXGFnsrVLaeM+qyIAw+mceor8qP2i/g5L8CvitqvhYzPdWSBbiyuJBhpLd+VLdsggqSOMqa96/wCHnXj8/wDMs+Hv++Zv/i68D+Pnx21f9oPxhaeItasLLT7u2sUsVjsQwRkV3cE7iTnMh/IVVOM4vXYzxtbDVofu/i9Dov2N/Htx4B/aG8JzRO4ttSul0u5jVsB0mOwZ9QrFW/4DX6m/HUf8WU8ef9gK9/8ARD1+PvwOOPjP4EI4P9uWX/o9K/YL46/8kU8ef9gK9/8ARD1FZe8jpy6TdCaf9aH4jV6V+z/8ENV+PnxCtvDmnyfZbZUNxe3rDIt4AQC2O5JIAHqfTJrzWv0R/wCCXegwxeDvG2tbQbi4v4rPdjkLHHv/AJyn8q6KkuWN0eRhKSrVlCWx7v4E/Y5+EvgTS4rZPB+n63OECyXetQreSSH+8Q4Kr/wEAVwX7QH7Cngbxr4T1G88IaNB4a8TwRtNbfYB5dvOwGfLeL7oB6AqAQSOo4r6n7U0e9cCnJO9z62WGoyhycqsfgncQSWs8kMqGOWNijowwVIOCDX3J/wTA8dTQ6/4t8HyzO1vPAmp28RPyq6kJIR7kNH/AN818qfHywj0z43eO7WEBYo9auwoHYeaxr2v/gm9IV/aHdQeH0e5B/76jNds9YM+Wwl6eJil3se4f8FQdbu7bwJ4N0qN2Wyu9RlnmA/iaOPCA/8Afxj+HtX50xBWkQMdqkgE+gr9iv2rPgKPj/8AC+bRraWO31yylF7ps0vCeaFIKMeysrEZ7HaecV+SHjPwPr3w912fRvEelXOkalCcNBcoVz7qejKezAkHsami1y2OjMqc41udrRn6+/Ar4UfDjwx8PdFfwjpmmX1pNaxudUEKSTXRIBLu5Gck547dABjFc5+0j+yp4Y+MPgjUV0vRNP07xbHGZLDUIIlhZpByEkZR8ytjHOcZyK/LnwB8YfGvwuuBL4W8SX+jjduMMMuYWPq0bZRvxFfRPgf/AIKU/ETQfIh8Q6XpXia3Q/PJsNrcOP8AeXKD/vis3TmndM6oY7D1Kfs6kbIxP+HdHxf/AOeGi/8Agw/+xr9AP2ZvB/in4ffBvQ/DfjAwHVtMD26tbzeaphDExjdgdFIH4V5p8J/+Cgfw3+Il3b6fqxuPB2pynao1LDWzN2AmXgfVwor6bWRZUV0YOjDIYHII9qzqSm9JI7cJQw8H7SjK5+fv/BUv/kL/AA9/64Xn/oUVfCsP+uj/AN4V91f8FS/+Qv8AD3/rhef+hRV8Kw/66P8A3hXVS+BHgY//AHmXy/JH71Wxxaxf7g/lX5GftofGW4+Lnxp1RIpy+h6JI+n2EQJ2/KcSSY6ZZgefQL6V+rXivVH0PwJrGox/6yz02a4X6rEWH8q/C+5na6uJZnYs8jl2J6kk5NY0Fq2ermtRqMaa6m34D8Dax8SfFum+HNCtjd6nfyeXEnQDuWY9lAySfQV+lXwn/wCCenw68IaNC/iu3k8Xa0ygzSTSvHbxt3EcaEZHQZbOcZ4zivGf+CXvhSzvPEvjXxDNHvvbG3t7S3Y9EWUuz/ifLT9fWv0P4xSq1GnyoWX4Wm6ftZq7Z4J4o/Yc+DniXTpbdfCqaTOy7Uu9NnkikjPqBkqT/vAivzx/ac/Zm1f9nXxPDDJMdT8O35Y6fqQXaWx1jkHZxn6EcjuB+xANeD/tueD7Xxf+zf4qMyK0+mImo20hHMbxuMkfVC6/8CqadRp2Z04vB0503KKs0fkNX6nf8E4zj9nX/uMXP/oMdfljX6nf8E4/+Tdf+4xc/wDoMdb1vhPIyz+P8j6jzzTqZ1NPrhPrDmviZuHw68TlcbhplzjPT/VNX4V6du+zIWJLYr90/iexX4b+KSAGI0y5wD0P7pq/CvTizW6knnHQV2UNmfNZv8cPQvkkDrSetDZNIK6TwhB1pRSA0qck0Mjqfcv/AASyGNa+IZP/ADwtf/QpK+r/AI7n9zo/H8UnP/fNfKP/AASzGNb+IeevkWv/AKFJX1d8dyPJ0cf7Uh/9Br4ni3/kV1v+3f8A0pH6ZwprWo/9vfkzylBxjvTxxTYx8vPWnA1/PO5+0C0Ud6Q56igBp60h60pzRSAdbztbXMUo4ZHDAj2NfVEZ3Ih6cV8pscYPvX1XF/q4/oK/VOB2/wDaF/h/9uPhuJVrSfr+hIelfjj+2F/ycp48/wCv/wD9kWv2OPSvxx/bC/5OU8ef9f8A/wCyLX65Q+Jn5fmv8KPqdH+wL/yc94a/64Xf/oh6/Wo1+Sv7Av8Ayc94a/64Xf8A6Iev1qPSlX+IrK/4L9f8hKUHig9KAOKwPZAV+Q37cf8Ayc/4y/37f/0njr9eegr8hv24/wDk5/xl/v2//pPHXRQ+I8XNP4K9f0ZB+xNz+074I/67zf8AoiSv1/xX5A/sS/8AJz3gj/rvN/6Ikr9f8daK/wASDKv4L9f0Qg618Hf8FJ/jZqOmS6V8ONLuHtbe7txqGptG2DMhYrFEcdsozEd/l9K+8e/tX5d/8FItAuNM+Ptvfvua21HSYXicjgFGdGUfTAP/AAIVNJJy1NsxlKNB8vU+WLW1lvbqK3gQyTSuERF6sxOAK/QH4a/8EydKl0C1ufG/iK/XVpkV5LPSvLSOAkfcLsrbiPUYH86+CNA1iXw9runapAA01lcR3CBuhZGDDP5V+tnw7/bT+FXjzQre8n8TWnh++KA3Gn6q3kvC+OQGI2uM91P5dK6Krkrcp42Ap0JuXtt+lzzs/wDBM34Zj/mNeJP/AAJh/wDjVfDH7Snw/wDDfws+L2seFvC95dX2n6ascck13IruZigZxlVA43AYx1Br77+Ov7e/gTwN4fu7bwfqMXirxLJGUtxbKxtYGI4eSTgMB12rknpx1r8wNX1S813U7vU9Qnkur28meee4lOWkkY7mYn1JOfxpUud6yKxzw8UoUUr9bHV/A/8A5LP4F/7Dll/6PSv2C+Ov/JFPHv8A2Ar3/wBEPX4+/A7/AJLP4E/7Dll/6PSv2C+Ov/JFPHn/AGAr3/0Q9TW+JHTlv8Gp/XQ/Eav0n/4Jg/8AJJfFX/YbP/oiKvzYr9J/+CYH/JJfFX/YcP8A6IirSt8BxZd/vC+Z9l9qbxTu1N7c1559cfir+0b/AMl6+IH/AGG7r/0Ya9f/AOCcH/JxX/cIuf5pXkH7R3/JeviB/wBhu6/9GGvYP+CcH/JxX/cIuf5pXoy/hnxtH/e1/i/U/Uhpo0bDOqn0JFc94w8D+FviJp/9n+JNI07XLU52x3kSSFCRglSeVPuMGvhv/gpf4G1fS/FHh7xvYyTppd1bf2ZcmFmVY5kZnQtjj5lZgP8ArnXxn4f8b654Z13T9XsdSuY72xnS5hZpSwDqwYZBOCMjpXPGlzLmTPZr5gqVR0pwv8/+AfpN41/4Jw/DDxDI8uiz6p4ZkK8R21x58WfUrKGb8Awr5v8Aiv8A8E6vG/gXS7vVPD+pWviyytkaV4IozDdbRydqEkMcdgc+gNfWPwe/bm+G/wARNBtm1vWLfwpryxj7VZaixji39zHKflKk9ASG9u9X/i1+2h8MfAXha+uLDxHZeJdVaJltdP0uXzvMkxxudcqi+pJ6dAelClUTsFSjgqkOe6Xo/wBD8jOh9DX6Vf8ABNz4sal4v8C614U1S5e7bQHiazklbcy28gb93k9lK8egYDoBX5sTSmaV5CAC7FiB05r9AP8Agl54Su4NP8aeJJY2SzuHgsYHI4dl3M+PpuT863q25NTycucliEkZP/BUv/kL/D3/AK4Xn/oUVfCsP+uj/wB4V91f8FS/+Qv8Pf8Arhef+hRV8Kw/66P/AHhTpfAiMf8A7zL5fkj91fEOk/294O1LTc4+2WEtvn/fjK/1r8L9RspdN1C6tJkMc0ErROh6hlJBH6V+8tr/AMesP+4P5V+Vf7eHwOufhj8WrrxBaWxHh3xHI11DKi/LFcHmWM+hz8w9Qxx0NYUHZtHrZpScoRqLod1/wTJ8e2Wi+OvE/ha6kEVxrNtFPalmADvCX3IPUlZM/RDX6PD7tfg94f1/UPCutWWr6TdyWOpWcqzQXEJwyMDwRX6B/CP/AIKW6DdaRb2XxB0m7sNTjUK+o6ZGJYJsfxMmQyE+g3D6dKqrTbfMjPAYynCHsqjtbY+3a+ef27PH1p4K/Z3160klUX+tlNOtYieW3MGkOPQIrc+pHrXM+Kv+CkHwv0bTnk0eDV9evcfu4I7byEz/ALTuRge4DfSvgf48/H7xJ+0D4sGsa6629rbgx2OmwE+TaoeuM9WOBljycDoAAIp03e7OjF42lGm403ds8zr9Tv8AgnF/ybr/ANxi5/8AQY6/LGv1N/4Jx/8AJuo/7DFz/wCgx1tW+E8zLP4/yZ9SA/MadTR9406uE+sOX+KRI+Gniohd5/su5+XPX901fhZppY20ZPHA4Ffup8T22fDjxQcFsaZcnA7/ALpq/CuwYvBHnC/KOldtDZnzOb/HD0NHjHWmF1XGTTZHCrjOeK+sf2PP2KpPiyYvF/jaKWDwdg/ZrIMY5dQbpnIwVjHqOSRxxzW0moq7PIo0p15ckNz5NFxHj71BmRB97FfrUf2B/gjsIHhGQZ9NRuf/AI5Ua/sBfBEA/wDFJynPrqVyf/alZ+3geh/ZNfuvxPAP+CWJD618Qmzz5Frx/wACkr6v+Op/d6OPeT/2Wr3wl/Z38CfA+51GfwdpMmmS6giJcF7qWbeFJK/fY46npVH464EejZ45l/8AZa+M4rmpZXWa/u/+lI+64Zoyw+JpU57q/wCTPLI/u0vOaSM5XOc0tfz4fsIUA0Uh6UDFZsDigGmE04Gk9gGsfmH1r6qh/wBXH9BXyq/UfWvqqH/Vx/Qfyr9U4H3xH/bv/tx8NxLvS+f6Eh6V+T/7Vfwg8c6/+0F411DTPB2u6hYz3u6K5tdOmkjkG1eVYLg/hX6wHpTTX6xCfI7n57icMsTFRbsfmB+xF8KfGnhj9ovw9qOseEtb0uwjhug91eafLFEpMDgZZlAGScV+oB6Uh6UHpSnLndx4bDrDQ5E76i0DpQRkUdqg6w7V+WP7ZPwl8beJP2jPFmo6T4R1zU7CZoPLurTT5ZYnxBGDhlUg8gj8K/U2jrWkJ8jucmJw6xMFBux+Vv7H3wk8b+Hf2i/B2o6r4Q1zTdPgmlMt1d6dLHEgMMgG5mUAckD8a/VMUDpzQKU587uLDYdYaLgncO5rxv8Aaf8A2c9O/aI8Ex6e8y2GuWDNNpt+wyI3IwyOO6NgZx0wD2xXsg5o71KbTujonCNSLhJaM/FD4mfALx58I9Qlt/Efh28toUbal9FGZLaX02yL8p+nX1FcD9nlzjynz6bTX71socFWAIPUEVU/sXT/ADvM+wWvmf3/ACVz+eK6VX7o8OWUq/uz/A/HP4N/sx+PPjXqdvHpGjz2ulM2JdXvIzHbRqDyQxHzEf3Vya+kP2tf2TP+EF+Efw+0rwNol/rtzp11crfzWVq001w8qRkyuEBIGYgB6DAr9CcBQAAAB2FDdqh1m3c6YZdTjTcG7t9T8ePg38FviBpvxb8F3d34J8QW1rBrNpLLPNpkypGgmUlmJXAAHJJr9VfjPY3Op/CHxraWkEl1dT6NeRRQQoWeRzCwCqBySScACuxNHbNTKo5NM6MPhI4eEop3ufiR/wAKJ+JH/QheJf8AwVT/APxNfoL/AME5vB+u+Dfhf4ltdf0a/wBFuZdYMkcOoWzwu6+RENwDAEjIIz7V9ZHpS9aqdVyVrGOHwEcPU9opXFHSmkUo6UnWsD1T8hvj78GfH2rfGzxxe2PgrX7yzuNXuZIbiDTZnSRTISGVguCD6ivVf2Afhh4w8I/Hv7frnhbWNHsv7KuI/tN9Yywx7iUwu5lAycHiv0lFIBzW7qtx5bHkQy6MKqq83W5h+OfA+jfEfwtqHh3xBZJf6VfR+XLE/wCYYHswOCCOQQK/ND44/sB+OPh5f3N54Ut5fF/h/cWjNsubuJc8K8Q5Yj1XOeuBX6l85oHWs41HDY6sRhaeJXvb9z8HdS0PUdHu5bW/sLmyuYjteG4hZHU+hBGRUNvp11dyrFBbTTSMcKkaFiT6ACv3iuLO3uj++t4ph/00QN/OkttNtLM/uLWGDH/POMLj8q39v5Hlf2T/AH/w/wCCflJ8Ev2G/iB8UdRt59Y06fwn4e3Ay3moxlJnXuI4j8xJHc4Hv2r9QPh78P8ARvhf4Q07w1oFsLbTbGPYg/ic9Wdj3YnJJ9TXRnrSHrWM6jnuerhsJTwy93V9z4a/4KSeAfE3jTVPAreH/D+p62tvDdiY6faSTiMlosBtoOM4PX0r4wh+BXxHEqH/AIQLxJjcP+YVP/8AE1+2lBq41XFWsc1fL41qjqOVrjLYbbaIHqFGQfpXNfEv4aaD8WvCN74c8R2a3mn3I+jxOPuyI38LDsfw6E11B6Up6VgnbY9SSUlZn5Q/G/8AYV8ffC+/uLnQ7Kbxd4e3ExXNhGXnjXsJIhzkDuMj6ZxXzpcafdWsrRzW0sUinDI6EEH0xX70darXGl2V7zcWkE5/6axK38xXSq7W6PEqZXCTvCVvxPw48J/D/wASeO9TTT/D+h3+r3jf8srSBnIHqcDge54r7l+Ff/BP7/hG/hb4q1HxbHFf+M77SLmLTrGMh47GRom2HPRpN2BkcDnGetfdFvbw2ybYokiX0RQB+lSDmlKs3sa0ctp03ebuz8SD8CPiQCR/wgXiTj/qFT//ABNfpP8AsB+F9Y8J/AQWGt6XeaPe/wBq3En2e+gaGTaVjwdrAHBwefavpAUL1qZ1XNWNMPgY4afOpXDGTTqb3p1YnqHL/FFgnw28Us2dq6Xck46/6pq/CmzlD20ZACnH9K/dL4sgn4YeLAP+gVdH/wAhNX5z/sV/sZN8V2tPGfjG1ktvCMLh7WycFW1Jh69xED1P8XQd66qMlFO54GY0Z160IQXQtfsZ/saz/FGa28ZeMrZofCUbb7W0fhtQYH9IwRye/av0xs7C302zhtbSCO2toUEccUShVRQMAADoBS2Vlb6bZw2tpClvbQoI4oYlCqigYAAHQCrBrGc3Nnp4fDxw8OVb9RhFOI4pSKTHFZnWJjNeT/HZwI9GX+ImX+S16xUFzYW17tNxbxT7fu+agbH515WaYJ5jg54VS5ea2u+zT/Q7sDiVg8RGu1e3+Vj5ZjcKg3ECl81fUYr6fGh6cQP9AtsD/piv+FA0PTun2C1wO3kr/hX55/qRP/n+v/Af+CfV/wCssf8An1+P/APmDzVPcUnmAng8V9PDQtOHA0+1A9PJX/CkbQNMZHQ6fbbXGGAhXn9KX+o9T/n+v/AX/mP/AFlj/wA+n9//AAD5jP50grsfH/gKXwxqBntwz6bMfkPXyz/dP9K4/ocV+e43CVsDWlQrxtJfj5ryPrMPiKeKpqrTd0xMgkfWvqqL/Vx4/uivlbAyPrX1TD/qo/8AdFfo3A++I/7d/wDbj5DiXel8/wBCQ9KaRTj0rzz41fF2L4SeH7CWHTpNb13VrtNO0nSonEZurh+gLHhVHUt2r9WSbdkfDSkoLmlsehY4pD0rwyH4l/FrwbqmjTeNvBukX2gancpayXHhSWee404v915o3X50B4Zl6cn0B9yByuRTaa3JhUU9he1LjjNeH+IvjP4w8T/ETWfBvwx0PStQn0EINW1nXp5I7SGVxuWBFjG52x1OcA8H31/hN8Y9U8UeLNb8EeMNFh8P+NdIiW5eG0mM1reWzHAnhYgHGcAqeRke4D5Ha5CrQcuX/hrnq/WlUZFct8UvF03w/wDhx4k8SW8CXc+lWMt2kEpIVyikgEjnHFV7Hx3Pd/CGLxgbWNbl9G/tT7Nk7A3k+Ztz1xnips7XNHNJ8vzOyHNIK4v4L+PZ/ih8L/Dniq6tY7KfVLVbh7eIkqhPYE81x3xy+Ouq/Cnxn4J0HSvDR8S3PiUXkcVvFL5cnnRohiAY/KqlnG5j91QT2p8rb5SXVjGHtHtp+J7LQOtcx8Or3xXqHhmKfxnp+n6ZrjSOXttMlaWJEz8g3NyWxjPbPSuL+Nvxf1jwH4i8HeFfDWn6dd+I/FE06Ws+sXDQ2cCwoGcuVG5mO5QqjqaOVt2G6kYw53setgYal6GvNPhb458aavr2s+HvHPhmHSdS09I5YdU0oySadfRuP+WbOAQyngqc16Xjmk1YqMlNXQvQ0jdaD1rzb43fGD/hU2j6Wljpb6/4l1u8XT9J0mOQR+fMeSWc/dRRyT7jpnIEm3ZBKSguaWx1/jPxhpHgDw1e6/rt19i0qyUPPPsZ9gJAHCgk8kdBWpa3Md9aQ3MLb4ZkWRG9VIyDXx9+1B4y+K2lfA3xBbeOfDOgtpGqRJAt94dupXaxkMilBMko+ZWI27lPBI45r6w8If8AIp6N/wBeUP8A6AKtxsrmEKvPUcUtkjXPSjtXkPxH+L2v2nj228BeA9GstY8UNafb7y41WdorOwtydqs+wFnZjwFXnueKj8BfF7xNF8RF8BfEPRdO0rXrq0a+03UNHuHksr+NCBIihwHWRcgkHORk8cZXK7XL9tDm5fl5XPYu1AFL2pAKg2MzxL4m0vwdoN7rWtX0Om6XZx+ZPc3DbURfr7nAA6kkAVn+APiFoPxQ8Nxa94bvf7Q0qV3jScxPHkqcNw4B6j0rw79viTXx8DLqLTrfT5dGlurUag91K6zKftUPlCNQpVgW4bcRgdM17V8OX8Uv4fx4tsdHsNRWTEceiTySwmLA2kmRFIbOeMY6VfL7vMc6qN1nT6JHU4pB1rx748/HW/8Ag9r/AIK0+w8PnxFJ4iuZ7RbaKTZKZVjBiVSeBudlBY8AZPau0+GOpeM9V0CS48b6Vpuj6o07GK00ydpkSHA2h2bq+c5xx0xS5Xa5aqxc3Bbo64cGlPWvPPi98Q9e8Ew6NY+GPDM3iTXtYuTb24bclnagDLS3EoB2KB0HVucVyXhj4weNtB+J2ieC/iLouiwS6/DNJpeqeHriR4GkiXc8UiSDcG28gjjp74ai2ridWMZcr/q57cetGOaXHNfM/wAOvj98U/jV4cuNR8G+EfD9mLG6mtri51u7mEM7oxwkKxgn7u3LMQMnABwaSi5bDnUjTaT3Z9MYpTXnfwL+LB+L/g641G60xtF1nTr6bStU05n3i3uoiA6hu45B/HHbNWPjP8WLP4O+Dv7Yns5tUvrm4jsdO0y3OJLy6kOEiBxxnkk9gDwTgFWd7D9pHk9pfQ7ztQeleCyfE74x+DVsNY8W+CNGvvDtxNHHcweGbie41CwVzgOyMuJQpI3bPcjgV7wriSNXXJBGRTcXHcIVFPYXHFKBxXjvjL4kfEK+8e3/AIW8B+FrHy9Nhjlu9e8TPNDZyO4yIoAi5kIHVgcA5B7Z0Pgp8X7/AOIV54n8P+IdKh0Xxd4ZuY7fULa0mM1vIsilopY2IB2sAeDyMDPWnyu1yVWi5cp3Hi/xfpHgLw3fa9r14un6TZJ5k9w6lggJAHABJ5IGB61f0jVLXXNMtNRsZlubK7iSeCZOjowBVh9QQa4z47+KI/Bfwf8AFWuT6Vaa3FY2ZlbT75N8E4yBtcHqOa6XwVqK6x4P0S/S3jtFurKGcW8Iwke5Adq+wzgUraXK5vfcfI2R3oA5rxj4q/GPxHo/xN0X4e+DNO0ifxDqFi+pNd6/cPFaxxKxXaoT5nckHgdAM+uOn+EvjbxR4oXWtO8Y+Gv+Ef13SLhYXktmeSyvUZdyy28jAEjqCvJU4zycA5Xa5Kqxc+RHoI60tIo5NLUm5W1Cwt9UsLiyu4lntbiNopYn6OjDBB9iDTdN0210ewtrGyt47Wzt0WKGGJdqooGAAPTFWjSE5IoFbW4GlNFIaBinpRQelHagA7UmOKXtSdqAFA4o60DpQKBDaBSigdaAK97YQajayW1zEs0Mg2sjDORXgfjjwTceEtRJAaaxlJMUuOn+yfevoXHNU9V0q21myltLuITQyDBB7e496+dzrJ6WbUOV6TXwv9H5HrZdmE8BU5lrF7r+up8ukgY+tfVUXEcf0FfOfjTwXc+EdTWKXMlnI2YZscMPQ+9fRkX+rj+gr5Tg/D1cJWxVGsrSXLf/AMmPbz+tDEQoVKbunf8AQkNeGftO+FdbuG8D+NdC0ybXLjwhqwv7jS7Ybpri3Zdsnlr/ABOByB3r3M0hr9OT5Xc+LqQVSPKzwz/hpyHxdqei6R4C8N6tr2p3d0iagb+wns7fTIf+WjyyOgG4dlXOSMZ6Z9yH3Rkc0bQDnABoNNtdEKEZq/M7nzDofiBv2afi58Qf+Eq03UT4T8VX41mw16xspLqKORlAkglEYZlIIG3jkc1r/CVNT+KH7QOufE8aPe6L4Zh0dND006lAYJ73975jTeW3KpngZ65HuB9Dkcc8igAAccfSr5/LUwVBppX91O9jj/jD4YuvGnwo8XaFYrvvtQ0u4t4EzjdI0ZCjJ9TivANH+OwuPgGPA9n4Y8QSfEGHRW0mTRX0yZBDIIjGZXlZdgj43Z3ZI4AzX1f2pMA84GfWpjJJWZc6TlLmi7aWPK/2VdOutJ/Z88EWd7bS2d3Dp6LJBOhR0PPBB5BrA+Luj3t7+0x8Dr2GynnsrQ6x9puI4i0cO61ATewGFyeBnqa90HHSgDJo5ve5g9l+7VO+1vwF9a8K/aTu9KS60C18Z+BH8UeBJi/2rV7OOSa50qYD5X2RjeEI43qcjHTpn3WkxmlF2dzScOePKfMP7NTzp8Vdeg8G3PiK6+E6abH5DeIFmCLel+RbGYB9gXIPv+FfT/ekChTgDH0pT1ok+Z3JpU/Zx5bisK8H/aY8Pa3a618PfiFoelT683g7UJpbzS7Rd80trPGI5WjX+J1ABA9/avdzzQRiiL5XcqpBVI8rPkD9pb41w/Gn4M614a8B+Hte1y7uEjlvpJNLmgSxjjkRyGMijdISAoVM9z2r6p8KRtF4X0hHUq62cQZW4IOwVqbQDkACnYwKbkrWSIhTlGbnJ3b0Pkj45/DbRtF+PsnjXxp4f1PXPBOr6bHaS3mlee76bcxnhpEhIby2Xvg8/rq/A/wn4E1v4sjWvBngPUrbRdItGa38VapNdR+bcP8AK0cMMxyy7CcuR14x0NfUJHGDQFAHAx9KpVNLGX1ZKfMu99tfvF7UDkUdqAOKyOw8P/bO0i+1v4AaxaafZz31015YssFtGZHIF3ESdoGeACfwr2y3GYI/90fyqXGabVX92xmoWm590l91/wDM8G+PejX2o/Gv4I3NtZT3NraapePcSxRFkhBgABcgYXJ6Zr3rvSYzS0N3SQRhyylLv/lY+cv2tBqJ1nwB/aMesy/DT7XcDxIuhiUy/cX7OZBF8/lBt27H88V5ZoHhrw7fftFfDPWPh34R1ay8J2txcR3OtXcNyiXEjQNjas3zBF6biACzYGcV9vkZ6igKB0ArSNTlVjmnhuefNfs9u3n2FJrwX9ivR77QfgwbXUbKewuf7WvnMNzE0b4MzEHBGcEV71jmg8HtWadk0dLhean2v+J4Z+y3pN9pE/xc+22c9n9p8e6ncQefGU82Jli2uuRypwcEcHFT/tVeCtc8TeE/Det+HbFtW1Lwnrtrrw0xPv3aRE7o0/2sHIHfGBkkCva+lIRinze9zGfsV7P2bZ4JJ+1hY+KDaaR4C8Oatr3i2WaKK60y+sZrSPTA2CzXUjLtTC5xjOTjHWve0LGNSwAbHIHavBV8C+L7n4+L4l0zQ5PC2nPes+sXp197iHWIEh8mH/Q9uxHwsR3cEBSOTXvlOdlawqLm+bn/ACsfHXxCXSB8fvF//C4rXxBdeHDHb/8ACLrZw3UtkU2fvVAtwf3hbGd3PX2rV/Y68N3GifFP4rXaeFtQ8KaLfDT5dOtL9X3eVskxlmz82CCy5JUtg9K+ryoYcjP1oxgdKr2nu2sZrDWqKd9nfbXXzPLP2pNOutX/AGe/HNnY20t5dzaeyxwQIXdzuXgKOSa7D4awSW3w88MQyo0UqaZbI6OMMpESggjsa6MdKFHHpWd/dsdPJ7/P5WPnj9oq68NS+L9NsfiL4EuNS8HNal7XxVp0U001jcZ+aJ/JG+NSACGHBOOOCQz9lGXV217xxHZXGvXXw2jlt18PS+IxIJydh87y/MAfys7cbh6Y53V9FYyMYpUAGcDH0qub3bGPsX7T2l/8/wDhhQeaWmjnIp1ZnWIelJ0xTqTFABmg0UUAB6UnQU6kxQAnajtS4oxQAgzigGlxRigBBQKXFFAB3pDS4oxQBma/oVr4j06Szu03RtyCOqn1FaCLtCqOgp+KMVmqcFN1EtXu/Qrmk4qLeiFooorQkKSlooATGaMUtFACYowKWigBMUYpaKACiiigAooooASloooAKKKKAExS0UUAFFFFABRRRQAUUUUAJiloooASilooATFGKWigBMUtFFABSYpaKAExiilooASloooASloooA//2Q==" alt="Fransid – cours de français">
+<p>Page conçue par <strong>Sid KHALIFA</strong>, professeur de français</p>
+</header>
+<nav role="tablist">
+<button role="tab" id="b1" aria-selected="true" onclick="show(1)">Aperçu sur le cours</button>
+<button role="tab" id="b2" aria-selected="false" onclick="show(2)">Entraînement</button>
+</nav>
+<main>
+<!-- COURS -->
+<section class="tab on" id="t1">
+<h1>Les temps du récit : valeurs et emplois</h1>
+<div class="rappel"><b class="t">Rappel</b>Dans un récit au passé, on distingue généralement deux plans :
+<ul><li><span class="v">L'arrière-plan</span> (décor, contexte, actions habituelles) : on utilise principalement l'<b>imparfait</b>.</li>
+<li><span class="v">Le premier plan</span> (actions principales, événements soudains) : on utilise principalement le <b>passé simple</b>.</li></ul></div>
+
+<h2>I. L'imparfait de l'indicatif</h2>
+<div class="tw"><table><tr><th>Valeur d'emploi</th><th>Exemple et explication</th></tr>
+<tr><td>La description</td><td><em class="ex">« La maison <b>était</b> sombre et les fenêtres <b>grimaçaient</b> sous la lune. »</em>On utilise l'imparfait pour peindre un décor ou le portrait d'un personnage.</td></tr>
+<tr><td>L'habitude (ou répétition)</td><td><em class="ex">« Chaque matin, il <b>prenait</b> son café sur la terrasse. »</em>Indique une action qui se répète dans le passé.</td></tr>
+<tr><td>L'action secondaire</td><td><em class="ex">« Il <b>marchait</b> tranquillement quand soudain… »</em>L'action dure dans le temps et sert de cadre à un événement plus bref.</td></tr></table></div>
+
+<h2>II. Le passé simple</h2>
+<div class="tw"><table><tr><th>Valeur d'emploi</th><th>Exemple et explication</th></tr>
+<tr><td>L'action soudaine</td><td><em class="ex">« Soudain, un cri <b>déchira</b> le silence de la nuit. »</em>Marque une rupture, un événement qui survient brusquement.</td></tr>
+<tr><td>L'action délimitée</td><td><em class="ex">« Il <b>vécut</b> à Paris pendant dix ans. »</em>L'action est perçue comme achevée, avec un début et une fin précis.</td></tr>
+<tr><td>Les actions successives</td><td><em class="ex">« Il <b>entra</b>, <b>salua</b> l'assemblée et <b>s'assit</b>. »</em>Permet de faire progresser le récit rapidement (premier plan).</td></tr></table></div>
+
+<h2>III. Le plus-que-parfait et le passé composé</h2>
+<p>Le <b>plus-que-parfait</b> exprime l'<span class="pill">antériorité</span>. Dans un récit au passé, il sert à évoquer une action qui s'est déroulée <em>avant</em> une autre action déjà passée.</p>
+<div class="rappel"><em>« Il s'aperçut qu'il <b>avait oublié</b> ses clés. »</em><br>L'oubli a eu lieu avant le moment où il s'en aperçoit.</div>
+<p>Le <b>passé composé</b> est souvent utilisé à l'oral ou dans un récit ancré dans le présent (comme une lettre ou un journal intime). Il exprime une action passée qui a encore des conséquences sur le présent ou qui est perçue comme proche. Dans le récit littéraire, il peut parfois remplacer le passé simple pour donner un ton plus moderne ou direct.</p>
+<h3>À retenir</h3>
+<div class="tw"><table><tr><th>Temps</th><th>Valeurs</th></tr>
+<tr><td>Imparfait</td><td>Description, habitude (répétition), action de second plan (arrière-plan)</td></tr>
+<tr><td>Passé simple</td><td>Action brève, soudaine, succession d'actions, premier plan</td></tr>
+<tr><td>Plus-que-parfait</td><td>Action antérieure à une autre action passée</td></tr></table></div>
+<p style="text-align:center"><button class="btn jaune" onclick="show(2)">Je m'entraîne !</button></p>
+</section>
+
+<!-- ENTRAINEMENT -->
+<section class="tab" id="t2">
+<h1>Entraînement</h1>
+<p>Réponds à chaque question. Après ta réponse, la bonne réponse s'affiche : <b>tu ne peux plus modifier ta réponse</b>, alors réfléchis bien !</p>
+<div class="envoi">
+<b>Envoyer mon travail à mon enseignant(e)</b>
+<div class="g">
+<div><label for="pre">Ton prénom</label><input type="text" id="pre" autocomplete="given-name"></div>
+<div><label for="em">Ton e-mail</label><input type="email" id="em" autocomplete="email"></div>
+<div><label for="et">E-mail de l'enseignant(e)</label><input type="email" id="et"></div></div>
+<button class="btn" id="send" onclick="envoyer()">Envoyer mon exercice</button>
+<div id="msg" role="status"></div>
+</div>
+<div class="score"><span id="sc">Score : 0 / 0</span><span id="pg">Questions traitées : 0 / 0</span></div>
+<h2>1. Vrai ou faux ?</h2><div id="vf"></div>
+<h2>2. QCM : quelle est la valeur d'emploi du verbe en gras ?</h2><div id="qcm"></div>
+<h2>3. Complète avec le temps qui convient</h2>
+<p>Conjugue le verbe entre parenthèses à l'imparfait, au passé simple ou au plus-que-parfait.</p><div id="cl"></div>
+<h2>4. Réponses courtes</h2>
+<p>Écris ta réponse, puis clique sur « Voir la correction ». La correction est un exemple de réponse : compare-la avec la tienne.</p><div id="rc"></div>
+</section>
+</main>
+<footer>Fransid – cours de français · Page conçue par Sid KHALIFA, professeur de français</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+function show(n){[1,2].forEach(i=>{$('t'+i).classList.toggle('on',i===n);$('b'+i).setAttribute('aria-selected',i===n)});window.scrollTo({top:0,behavior:'smooth'})}
+
+const VF=[
+["Dans « La mer <b>était</b> calme », l'imparfait sert à décrire.",true,"Oui : l'imparfait peint un décor."],
+["Le passé simple exprime une habitude dans le passé.",false,"Non : l'habitude s'exprime à l'imparfait (« Chaque matin, il prenait… »)."],
+["Le plus-que-parfait exprime une action antérieure à une autre action passée.",true,"Oui : c'est le temps de l'antériorité."],
+["Dans « Il <b>marchait</b> quand soudain… », « marchait » est une action de premier plan.",false,"Non : c'est une action de second plan (arrière-plan), interrompue par un événement soudain."],
+["« Il entra, salua l'assemblée et s'assit » est une succession d'actions au passé simple.",true,"Oui : ces actions s'enchaînent et font avancer le récit."],
+["Le passé composé peut parfois remplacer le passé simple pour donner un ton plus moderne.",true,"Oui, notamment dans un récit proche de l'oral ou ancré dans le présent."]];
+const QCM=[
+["« La mer <b>était</b> d'un bleu profond et calme. »",["Habitude","Description","Action soudaine"],1,"Description : on peint un état stable."],
+["« Soudain, un cri <b>déchira</b> le silence de la nuit. »",["Action brève et soudaine","Description","Action de second plan"],0,"Action brève et soudaine : « soudain » marque la rupture."],
+["« Chaque matin, il <b>lisait</b> son journal avant de partir. »",["Action unique","Habitude","Antériorité"],1,"Habitude : « chaque matin » indique la répétition."],
+["« Il <b>avait terminé</b> ses devoirs quand son ami arriva. »",["Action simultanée","Antériorité (action accomplie avant une autre)","Description"],1,"Antériorité : les devoirs sont finis avant l'arrivée de l'ami."],
+["« Le chevalier <b>saisit</b> son épée et <b>sauta</b> sur son destrier. »",["Arrière-plan","Actions durables","Actions successives (premier plan)"],2,"Actions successives : enchaînement rapide de faits."],
+["« Tandis qu'il <b>dormait</b>, le voleur s'introduisit dans la pièce. »",["Action de second plan (arrière-plan)","Action brève","Habitude"],0,"Action de second plan : le sommeil dure pendant l'intrusion."],
+["« Elle <b>portait</b> une robe de soie rouge. »",["Antériorité","Action brève","Description"],2,"Description : portrait / tenue du personnage."]];
+const CL=[
+["La nuit (être) ___ particulièrement noire.",["était"],"imparfait : description du décor."],
+["Un brouillard épais (envelopper) ___ la vieille tour de pierre.",["enveloppait"],"imparfait : description, arrière-plan."],
+["Depuis des années, personne n'(oser) ___ s'en approcher.",["avait osé"],"plus-que-parfait : antériorité par rapport au moment du récit."],
+["Soudain, une silhouette (apparaître) ___ à l'entrée du sentier.",["apparut"],"passé simple : action soudaine."],
+["Il (marcher) ___ d'un pas hésitant quand une chouette poussa un cri.",["marchait"],"imparfait : action de second plan, interrompue."],
+["Le jeune homme (s'arrêter) ___ net.",["s'arrêta","s’arrêta"],"passé simple : action brève de premier plan."],
+["Il se souvint de ce que son grand-père lui (dire) ___ bien des années auparavant.",["avait dit"],"plus-que-parfait : retour en arrière, action antérieure."],
+["Sans plus attendre, il (reprendre) ___ sa route et entra dans la tour.",["reprit"],"passé simple : actions successives."]];
+const RC=[
+["Identifie les temps et justifie leur emploi : « Le vent soufflait violemment sur la lande lorsque le voyageur aperçut une lueur au loin. »","« soufflait » est à l'imparfait : description du décor (arrière-plan). « aperçut » est au passé simple : action soudaine de premier plan qui interrompt la description et fait avancer l'histoire."],
+["Explique pourquoi le plus-que-parfait est nécessaire : « Elle cherchait le livre qu'elle avait acheté la veille. »","« avait acheté » exprime l'antériorité : l'achat a eu lieu la veille, donc avant le moment où elle cherche le livre (imparfait)."],
+["Transpose au passé (imparfait / passé simple) : « Le soleil décline lentement. Soudain, un cri déchire le calme. »","Le soleil déclinait lentement (imparfait : décor). Soudain, un cri déchira le calme (passé simple : action soudaine)."],
+["Pourquoi « dire » doit-il être au plus-que-parfait : « Il se souvint de ce que son grand-père lui avait dit bien des années auparavant » ?","Le plus-que-parfait marque un retour en arrière : les paroles du grand-père sont accomplies bien avant le moment où Julien se souvient."]];
+
+const R={};let total=VF.length+QCM.length+CL.length;let done=0,pts=0;
+function upd(){$('sc').textContent=`Score : ${pts} / ${VF.length+QCM.length+CL.length}`;$('pg').textContent=`Questions traitées : ${done} / ${total+RC.length}`}
+function rec(id,type,q,rep,ok){R[id]={type,q:q.replace(/<[^>]+>/g,''),rep,ok};done++;if(ok)pts++;upd()}
+function card(id,html){const d=document.createElement('div');d.className='q';d.id=id;d.innerHTML=html;return d}
+function fb(d,ok,txt){d.classList.add(ok?'ok':'ko');const f=d.querySelector('.fb');f.className='fb show '+(ok?'ok':'ko');f.innerHTML=(ok?'✔ Bravo ! ':'✘ Pas tout à fait. ')+txt}
+
+VF.forEach((v,i)=>{const id='vf'+i,d=card(id,`<p><b>${i+1}.</b> ${v[0]}</p><div class="opts row"><button class="opt" data-v="true">Vrai</button><button class="opt" data-v="false">Faux</button></div><div class="fb"></div>`);
+d.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const c=(b.dataset.v==='true')===v[1];d.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if((x.dataset.v==='true')===v[1])x.classList.add('good')});if(!c)b.classList.add('bad');fb(d,c,(v[1]?'C\'est vrai. ':'C\'est faux. ')+v[2]);rec(id,'Vrai/Faux',v[0],b.textContent,c)});
+$('vf').append(d)});
+
+QCM.forEach((v,i)=>{const id='qcm'+i,d=card(id,`<p><b>${i+1}.</b> ${v[0]}</p><div class="opts">${v[1].map((o,k)=>`<button class="opt" data-k="${k}">${'ABC'[k]}) ${o}</button>`).join('')}</div><div class="fb"></div>`);
+d.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const k=+b.dataset.k,c=k===v[2];d.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.k===v[2])x.classList.add('good')});if(!c)b.classList.add('bad');fb(d,c,v[3]);rec(id,'QCM',v[0],v[1][k],c)});
+$('qcm').append(d)});
+
+const norm=s=>s.toLowerCase().replace(/[’']/g,"'").replace(/\s+/g,' ').trim();
+CL.forEach((v,i)=>{const id='cl'+i,d=card(id,`<p><b>${i+1}.</b> ${v[0].replace('___','<input type="text" class="gap" aria-label="réponse '+(i+1)+'" autocomplete="off" autocapitalize="off" spellcheck="false">')}</p><button class="btn">Valider</button><div class="fb"></div>`);
+const inp=d.querySelector('input'),b=d.querySelector('button');
+const go=()=>{if(!inp.value.trim()){inp.focus();return}const c=v[1].some(a=>norm(a)===norm(inp.value));inp.disabled=true;b.disabled=true;fb(d,c,`Réponse attendue : <b>${v[1][0]}</b> (${v[2]})`);rec(id,'Compléter',v[0],inp.value.trim(),c)};
+b.onclick=go;inp.onkeydown=e=>{if(e.key==='Enter')go()};$('cl').append(d)});
+
+RC.forEach((v,i)=>{const id='rc'+i,d=card(id,`<p><b>${i+1}.</b> ${v[0]}</p><textarea aria-label="ta réponse"></textarea><p style="margin:8px 0 0"><button class="btn">Voir la correction</button></p><div class="fb"></div>`);
+const t=d.querySelector('textarea'),b=d.querySelector('button');
+b.onclick=()=>{if(!t.value.trim()){t.focus();return}t.disabled=true;b.disabled=true;const f=d.querySelector('.fb');f.className='fb show nt';f.innerHTML='<b>Exemple de réponse :</b> '+v[1];R[id]={type:'Réponse courte',q:v[0],rep:t.value.trim(),ok:null,corr:v[1]};done++;upd()};
+$('rc').append(d)});
+upd();
+
+async function envoyer(){
+const pre=$('pre').value.trim(),em=$('em').value.trim(),et=$('et').value.trim(),m=$('msg');
+const mail=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+if(!pre||!mail.test(em)||!mail.test(et)){m.style.color='#b3261e';m.textContent='Écris ton prénom et deux adresses e-mail valides.';return}
+if(!Object.keys(R).length){m.style.color='#b3261e';m.textContent='Réponds d\'abord à au moins une question.';return}
+let txt=`Exercice : Les temps du récit\nÉlève : ${pre} (${em})\nScore (questions corrigées automatiquement) : ${pts} / ${VF.length+QCM.length+CL.length}\n\n`;
+Object.values(R).forEach((r,i)=>{txt+=`${i+1}. [${r.type}] ${r.q}\n   Réponse de l'élève : ${r.rep}\n`+(r.ok===null?`   (à corriger – exemple : ${r.corr})\n`:`   Résultat : ${r.ok?'juste':'faux'}\n`)+'\n'});
+const b=$('send');b.disabled=true;m.style.color='#1d4a38';m.textContent='Envoi en cours…';
+try{const r=await fetch('https://formsubmit.co/ajax/'+encodeURIComponent(et),{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({_subject:`Exercice – Temps du récit – ${pre}`,_replyto:em,_captcha:'false',_template:'box',Prénom:pre,'E-mail élève':em,Score:`${pts} / ${VF.length+QCM.length+CL.length}`,Résultats:txt})});
+const j=await r.json();if(r.ok&&(j.success===true||j.success==='true')){m.textContent='✔ Exercice envoyé à '+et+' !'}else{throw new Error(j.message||'erreur')}}
+catch(e){m.style.color='#b3261e';m.textContent='L\'envoi a échoué. Vérifie ta connexion et l\'adresse de l\'enseignant(e), puis réessaie. (Si la page est ouverte depuis un fichier, demande à ton enseignant de la mettre en ligne.)'}
+b.disabled=false}
+</script>
+</body>
+</html>
